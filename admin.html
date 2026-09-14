@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Bobbe's Oracle Admin</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Niramit:wght@200;300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#080606;
+  --panel:#120d0d;
+  --panel2:#181010;
+  --gold:#c8a47c;
+  --gold2:#ead4b4;
+  --text:#eadbc7;
+  --muted:#a89582;
+  --danger:#a85c5c;
+  --green:#8fb587;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:
+    radial-gradient(circle at top,#251817 0%,#080606 58%);
+  color:var(--text);
+  font-family:'Niramit',sans-serif;
+}
+
+body{
+  min-height:100vh;
+}
+
+button,
+input,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.container{
+  width:min(1100px,calc(100% - 28px));
+  margin:auto;
+}
+
+/* LOGIN */
+
+.login-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.login-card{
+  width:min(420px,100%);
+  padding:32px;
+  background:rgba(18,13,13,.96);
+  border:1px solid rgba(200,164,124,.35);
+  border-radius:22px;
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.6),
+    inset 0 0 50px rgba(200,164,124,.025);
+}
+
+.login-symbol{
+  width:62px;
+  height:62px;
+  margin:0 auto 15px;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold2);
+  font-size:27px;
+}
+
+.login-card h1{
+  margin:0;
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;
+  font-weight:500;
+  color:var(--gold2);
+}
+
+.login-sub{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  margin:4px 0 28px;
+}
+
+.field{
+  margin-bottom:15px;
+}
+
+label{
+  display:block;
+  margin-bottom:7px;
+  font-size:14px;
+  color:var(--gold2);
+}
+
+input,
+textarea{
+  width:100%;
+  padding:11px 13px;
+  color:var(--text);
+  background:#0b0808;
+  border:1px solid rgba(200,164,124,.2);
+  border-radius:11px;
+  outline:none;
+}
+
+input:focus,
+textarea:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 2px rgba(200,164,124,.08);
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.error{
+  color:#df9999;
+  font-size:13px;
+  margin-top:12px;
+}
+
+/* BUTTON */
+
+.btn{
+  border:1px solid rgba(200,164,124,.4);
+  background:#120d0d;
+  color:var(--gold2);
+  border-radius:10px;
+  padding:9px 14px;
+  transition:.2s;
+}
+
+.btn:hover{
+  border-color:var(--gold);
+  transform:translateY(-1px);
+}
+
+.btn.primary{
+  background:linear-gradient(135deg,#72583a,#332416);
+}
+
+.btn.danger{
+  color:#e3aaaa;
+  border-color:rgba(168,92,92,.45);
+}
+
+.btn.green{
+  color:#cce2c7;
+  border-color:rgba(143,181,135,.4);
+}
+
+/* HEADER */
+
+header{
+  border-bottom:1px solid rgba(200,164,124,.2);
+  padding:23px 0;
+}
+
+.header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.brand-symbol{
+  width:47px;
+  height:47px;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold2);
+  font-size:21px;
+}
+
+.brand-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;
+  color:var(--gold2);
+  line-height:1;
+}
+
+.brand-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.user{
+  text-align:right;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.logout{
+  margin-top:6px;
+  padding:5px 12px;
+  border-radius:999px;
+  border:1px solid rgba(200,164,124,.35);
+  background:transparent;
+  color:var(--gold2);
+}
+
+/* MAIN */
+
+main{
+  padding:22px 0 50px;
+}
+
+.notice{
+  margin-bottom:18px;
+  padding:13px 15px;
+  border-radius:12px;
+  border:1px solid rgba(200,164,124,.2);
+  background:rgba(255,255,255,.025);
+  color:var(--muted);
+  font-size:13px;
+}
+
+.section{
+  margin-bottom:18px;
+  padding:19px;
+  border-radius:18px;
+  border:1px solid rgba(200,164,124,.19);
+  background:rgba(18,13,13,.88);
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:17px;
+}
+
+.section-head h2{
+  margin:0;
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;
+  font-weight:500;
+  color:var(--gold2);
+}
+
+.section-head span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+/* ITEMS */
+
+.item{
+  margin-bottom:12px;
+  padding:15px;
+  border-radius:14px;
+  border:1px solid rgba(200,164,124,.17);
+  background:rgba(0,0,0,.15);
+}
+
+.item-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.item-title{
+  color:var(--gold2);
+  font-weight:600;
+}
+
+.item-actions{
+  display:flex;
+  gap:5px;
+}
+
+.preview{
+  width:100%;
+  max-height:180px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-top:8px;
+  border:1px solid rgba(200,164,124,.2);
+}
+
+/* TOGGLE */
+
+.toggle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-top:8px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.switch{
+  width:48px;
+  height:26px;
+  position:relative;
+  flex:none;
+}
+
+.switch input{
+  display:none;
+}
+
+.slider{
+  position:absolute;
+  inset:0;
+  border-radius:999px;
+  background:#292020;
+  border:1px solid rgba(200,164,124,.25);
+}
+
+.slider:before{
+  content:"";
+  position:absolute;
+  width:20px;
+  height:20px;
+  top:2px;
+  left:2px;
+  border-radius:50%;
+  background:#928276;
+  transition:.2s;
+}
+
+.switch input:checked + .slider{
+  background:#5b4935;
+}
+
+.switch input:checked + .slider:before{
+  transform:translateX(22px);
+  background:var(--gold2);
+}
+
+/* SAVE */
+
+.save-area{
+  position:sticky;
+  bottom:0;
+  z-index:20;
+  padding:15px 0;
+  background:linear-gradient(
+    transparent,
+    #080606 30%
+  );
+}
+
+.save-buttons{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:9px;
+}
+
+.save-status{
+  min-height:20px;
+  text-align:center;
+  color:var(--green);
+  font-size:13px;
+  margin-top:7px;
+}
+
+@media(max-width:700px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .header-row{
+    align-items:flex-start;
+  }
+
+  .brand-title{
+    font-size:25px;
+  }
+
+  .section{
+    padding:15px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+LOGIN
+===================================================== -->
+
+<div id="loginScreen" class="login-screen">
+
+  <div class="login-card">
+
+    <div class="login-symbol">✦</div>
+
+    <h1>Bobbe's Oracle</h1>
+
+    <div class="login-sub">
+      Admin Panel
+    </div>
+
+    <div class="field">
+
+      <label>Email</label>
+
+      <input
+        id="loginEmail"
+        type="email"
+        autocomplete="username"
+        placeholder="Admin Email">
+
+    </div>
+
+    <div class="field">
+
+      <label>Password</label>
+
+      <input
+        id="loginPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Password">
+
+    </div>
+
+    <button
+      class="btn primary"
+      style="width:100%"
+      onclick="login()">
+
+      เข้าสู่ระบบ
+
+    </button>
+
+    <div
+      id="loginError"
+      class="error">
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+ADMIN APP
+===================================================== -->
+
+<div id="adminApp" style="display:none">
+
+<header>
+
+  <div class="container">
+
+    <div class="header-row">
+
+      <div class="brand">
+
+        <div class="brand-symbol">
+          ✦
+        </div>
+
+        <div>
+
+          <div class="brand-title">
+            Bobbe's Oracle
+          </div>
+
+          <div class="brand-sub">
+            Website Content Admin
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="user">
+
+        <div id="adminEmail"></div>
+
+        <button
+          class="logout"
+          onclick="logout()">
+
+          ออกจากระบบ
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+<div class="notice">
+
+  แก้ข้อมูลหน้าเว็บจากหน้านี้ได้เลย
+  เมื่อกด <b>บันทึกเว็บไซต์</b>
+  ข้อมูลจะถูกบันทึกลง Supabase
+
+</div>
+
+
+<!-- IMAGES -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h2>ภาพเว็บไซต์</h2>
+      <span>IMAGES</span>
+    </div>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>Background Image</label>
+
+      <input
+        id="backgroundImage"
+        placeholder="https://...">
+
+      <img
+        id="backgroundPreview"
+        class="preview"
+        style="display:none">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Hero Image</label>
+
+      <input
+        id="heroImage"
+        placeholder="https://...">
+
+      <img
+        id="heroPreview"
+        class="preview"
+        style="display:none">
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- INTRO -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h2>ข้อความเปิดหน้าเว็บ</h2>
+      <span>INTRODUCTION</span>
+    </div>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>Eyebrow</label>
+
+      <input id="introEyebrow">
+
+    </div>
+
+    <div class="field">
+
+      <label>หัวข้อ</label>
+
+      <input id="introTitle">
+
+    </div>
+
+    <div class="field full">
+
+      <label>รายละเอียด</label>
+
+      <textarea id="introText"></textarea>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SERVICES -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h2>บริการ</h2>
+      <span>SERVICES</span>
+    </div>
+
+    <button
+      class="btn"
+      onclick="addService()">
+
+      + เพิ่มบริการ
+
+    </button>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>Eyebrow</label>
+
+      <input id="servicesEyebrow">
+
+    </div>
+
+    <div class="field">
+
+      <label>หัวข้อ</label>
+
+      <input id="servicesTitle">
+
+    </div>
+
+  </div>
+
+  <div id="servicesList"></div>
+
+</section>
+
+
+<!-- PRICES -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h2>ค่าบริการ</h2>
+      <span>PRICE</span>
+    </div>
+
+    <button
+      class="btn"
+      onclick="addPrice()">
+
+      + เพิ่มราคา
+
+    </button>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>Eyebrow</label>
+
+      <input id="priceEyebrow">
+
+    </div>
+
+    <div class="field">
+
+      <label>หัวข้อ</label>
+
+      <input id="priceTitle">
+
+    </div>
+
+  </div>
+
+  <div id="pricesList"></div>
+
+</section>
+
+
+<!-- BOOKING -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h2>วิธีจองคิว</h2>
+      <span>BOOKING</span>
+    </div>
+
+    <button
+      class="btn"
+      onclick="addStep()">
+
+      + เพิ่มขั้นตอน
+
+    </button>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>Eyebrow</label>
+
+      <input id="bookingEyebrow">
+
+    </div>
+
+    <div class="field">
+
+      <label>หัวข้อ</label>
+
+      <input id="bookingTitle">
+
+    </div>
+
+  </div>
+
+  <div id="stepsList"></div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h2>ปุ่มจองคิว</h2>
+      <span>CALL TO ACTION</span>
+    </div>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>ข้อความปุ่ม</label>
+
+      <input id="ctaText">
+
+    </div>
+
+    <div class="field">
+
+      <label>URL</label>
+
+      <input id="ctaUrl">
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h2>ช่องทางติดต่อ</h2>
+      <span>CONTACT</span>
+    </div>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>Eyebrow</label>
+
+      <input id="contactEyebrow">
+
+    </div>
+
+    <div class="field">
+
+      <label>หัวข้อ</label>
+
+      <input id="contactTitle">
+
+    </div>
+
+    <div class="field">
+
+      <label>LINE Label</label>
+
+      <input id="lineLabel">
+
+    </div>
+
+    <div class="field">
+
+      <label>LINE</label>
+
+      <input id="line">
+
+    </div>
+
+    <div class="field">
+
+      <label>TikTok Label</label>
+
+      <input id="tiktokLabel">
+
+    </div>
+
+    <div class="field">
+
+      <label>TikTok</label>
+
+      <input id="tiktok">
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MUSIC -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h2>เพลง</h2>
+      <span>BACKGROUND MUSIC</span>
+    </div>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>Music URL</label>
+
+      <input
+        id="musicUrl"
+        placeholder="https://...mp3">
+
+    </div>
+
+    <div class="field">
+
+      <label>Volume 0–1</label>
+
+      <input
+        id="musicVolume"
+        type="number"
+        min="0"
+        max="1"
+        step=".05">
+
+    </div>
+
+  </div>
+
+  <div class="toggle">
+
+    <span>เปิดระบบเพลง</span>
+
+    <label class="switch">
+
+      <input
+        id="musicEnabled"
+        type="checkbox">
+
+      <span class="slider"></span>
+
+    </label>
+
+  </div>
+
+  <div class="toggle">
+
+    <span>เปิดเพลงอัตโนมัติ</span>
+
+    <label class="switch">
+
+      <input
+        id="musicAutoplay"
+        type="checkbox">
+
+      <span class="slider"></span>
+
+    </label>
+
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h2>Footer</h2>
+      <span>FOOTER</span>
+    </div>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>ชื่อร้าน</label>
+
+      <input id="footerBrand">
+
+    </div>
+
+    <div class="field">
+
+      <label>ข้อความ</label>
+
+      <input id="footerCopy">
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SAVE -->
+
+<div class="save-area">
+
+  <div class="save-buttons">
+
+    <button
+      class="btn primary"
+      onclick="saveConfig()">
+
+      ✦ บันทึกเว็บไซต์
+
+    </button>
+
+    <button
+      class="btn green"
+      onclick="previewSite()">
+
+      👁 ดูหน้าเว็บ
+
+    </button>
+
+  </div>
+
+  <div
+    id="saveStatus"
+    class="save-status">
+  </div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+SUPABASE CONFIG
+========================================================= */
+
+const SUPABASE_URL =
+  "https://lastxtiqlnwyuaffjcto.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_AWA4vuJobNXRMCxjmVDJZg_7390ZfdT";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+/* =========================================================
+DEFAULT CONFIG
+========================================================= */
+
+const DEFAULT_CONFIG = {
+
+  images:{
+    background:
+      "https://i.postimg.cc/q7yxHpK6/46BC4247-B73D-48B4-9A62-F06BA85D945B.png",
+
+    hero:
+      "https://i.postimg.cc/WzYS5XRR/F656C5CF-B6FB-4101-9F4A-A69A16B8BA84.png"
+  },
+
+  intro:{
+    eyebrow:"TAROT READING",
+    title:"เปิดไพ่เพื่อค้นหาคำตอบ",
+    text:"พื้นที่สำหรับดูดวงและคำแนะนำจากไพ่ทาโรต์ เพื่อช่วยให้คุณมองเห็นสิ่งต่าง ๆ ได้ชัดเจนขึ้น"
+  },
+
+  servicesTitle:{
+    eyebrow:"SERVICES",
+    title:"เมนูพยากรณ์"
+  },
+
+  services:[
+    {
+      name:"ดูดวงทั่วไป",
+      price:"เริ่มต้น 199฿",
+      description:"ภาพรวมชีวิต คำแนะนำในแต่ละเรื่อง และแนวโน้มที่ควรรู้",
+      image:"",
+      enabled:true
+    },
+    {
+      name:"ดูดวงความรัก",
+      price:"เริ่มต้น 199฿",
+      description:"ความสัมพันธ์ คนรัก คนเก่า ความรู้สึก และแนวโน้มของความสัมพันธ์",
+      image:"",
+      enabled:true
+    },
+    {
+      name:"ดูดวงการเงิน",
+      price:"เริ่มต้น 199฿",
+      description:"การเงิน งาน รายได้ โอกาสใหม่ ๆ และสิ่งที่ควรระวัง",
+      image:"",
+      enabled:true
+    },
+    {
+      name:"ดูดวงการงาน",
+      price:"เริ่มต้น 199฿",
+      description:"หน้าที่ การงาน เป้าหมาย ความก้าวหน้า และทิศทางในอนาคต",
+      image:"",
+      enabled:true
+    },
+    {
+      name:"ดูดวงเฉพาะเรื่อง",
+      price:"เริ่มต้น 299฿",
+      description:"สำหรับคำถามเฉพาะด้าน และเรื่องที่ต้องการคำแนะนำเพิ่มเติม",
+      image:"",
+      enabled:true
+    }
+  ],
+
+  priceTitle:{
+    eyebrow:"PRICE",
+    title:"ค่าบริการ"
+  },
+
+  prices:[
+    {
+      name:"คำถาม",
+      duration:"1 คำถาม",
+      value:"9฿"
+    },
+    {
+      name:"ดูดวงทั่วไป",
+      duration:"30 นาที",
+      value:"199฿"
+    },
+    {
+      name:"ดูดวงความรัก",
+      duration:"30 นาที",
+      value:"199฿"
+    },
+    {
+      name:"ดูดวงการเงิน",
+      duration:"30 นาที",
+      value:"199฿"
+    },
+    {
+      name:"ดูดวงการงาน",
+      duration:"30 นาที",
+      value:"199฿"
+    },
+    {
+      name:"ดูดวงเฉพาะเรื่อง",
+      duration:"30 นาที",
+      value:"299฿"
+    }
+  ],
+
+  booking:{
+    eyebrow:"BOOKING",
+    title:"วิธีจองคิว",
+    steps:[
+      "เลือกบริการที่ต้องการ",
+      "ทักแชทเพื่อเช็คคิวและยืนยันการจอง",
+      "ยืนยันวัน–เวลา และชำระค่าบริการ",
+      "รอรับคำทำนายได้เลยค่ะ"
+    ]
+  },
+
+  cta:{
+    text:"จองคิวเลย",
+    url:"https://lin.ee/s6TdSA3X"
+  },
+
+  contact:{
+    eyebrow:"CONTACT",
+    title:"ติดต่อเรา",
+    lineLabel:"Line :",
+    line:"@856dmoet",
+    tiktokLabel:"TikTok :",
+    tiktok:"Bobbe’s oracle"
+  },
+
+  footer:{
+    brand:"Bobbe’s oracle",
+    copy:"TAROT READING & GUIDANCE"
+  },
+
+  music:{
+    enabled:false,
+    autoplay:true,
+    url:"",
+    volume:.45
+  }
+
+};
+
+
+let config =
+  structuredClone(DEFAULT_CONFIG);
+
+
+/* =========================================================
+AUTH
+========================================================= */
+
+async function init(){
+
+  const {
+    data:{
+      session
+    }
+  } =
+  await supabaseClient.auth.getSession();
+
+  if(!session){
+
+    showLogin();
+
+    return;
+
+  }
+
+  await verifyAdmin(session.user);
+
+}
+
+
+async function verifyAdmin(user){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("bobbes_oracle_admins")
+    .select("user_id")
+    .eq("user_id",user.id)
+    .maybeSingle();
+
+  if(error){
+
+    console.error(error);
+
+    showLogin();
+
+    document.getElementById("loginError").textContent =
+      "ตรวจสอบสิทธิ์ไม่สำเร็จ";
+
+    return;
+
+  }
+
+  if(!data){
+
+    await supabaseClient.auth.signOut();
+
+    showLogin();
+
+    document.getElementById("loginError").textContent =
+      "บัญชีนี้ไม่มีสิทธิ์เข้า Admin";
+
+    return;
+
+  }
+
+  document.getElementById("adminEmail").textContent =
+    user.email || "";
+
+  showAdmin();
+
+  await loadConfig();
+
+}
+
+
+async function login(){
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const errorBox =
+    document.getElementById("loginError");
+
+  errorBox.textContent="";
+
+  if(!email || !password){
+
+    errorBox.textContent =
+      "กรุณากรอก Email และ Password";
+
+    return;
+
+  }
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient.auth.signInWithPassword({
+
+    email,
+    password
+
+  });
+
+  if(error){
+
+    errorBox.textContent =
+      error.message;
+
+    return;
+
+  }
+
+  await verifyAdmin(data.user);
+
+}
+
+
+async function logout(){
+
+  await supabaseClient.auth.signOut();
+
+  location.reload();
+
+}
+
+
+function showLogin(){
+
+  document.getElementById("loginScreen")
+    .style.display="flex";
+
+  document.getElementById("adminApp")
+    .style.display="none";
+
+}
+
+
+function showAdmin(){
+
+  document.getElementById("loginScreen")
+    .style.display="none";
+
+  document.getElementById("adminApp")
+    .style.display="block";
+
+}
+
+
+/* =========================================================
+LOAD
+========================================================= */
+
+async function loadConfig(){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("bobbes_oracle_config")
+    .select("config")
+    .eq("id",1)
+    .maybeSingle();
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "โหลดข้อมูลไม่สำเร็จ\n\n"+
+      error.message
+    );
+
+    return;
+
+  }
+
+  if(data?.config){
+
+    config = mergeConfig(
+      structuredClone(DEFAULT_CONFIG),
+      data.config
+    );
+
+  }else{
+
+    await createConfig();
+
+  }
+
+  render();
+
+}
+
+
+async function createConfig(){
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("bobbes_oracle_config")
+    .insert({
+
+      id:1,
+
+      config:DEFAULT_CONFIG,
+
+      published:true
+
+    });
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "สร้างข้อมูลเริ่มต้นไม่สำเร็จ\n\n"+
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+MERGE
+========================================================= */
+
+function mergeConfig(base,custom){
+
+  if(!custom) return base;
+
+  Object.keys(custom).forEach(key=>{
+
+    if(
+      custom[key] &&
+      typeof custom[key]==="object" &&
+      !Array.isArray(custom[key]) &&
+      typeof base[key]==="object"
+    ){
+
+      base[key] =
+        mergeConfig(
+          base[key],
+          custom[key]
+        );
+
+    }else{
+
+      base[key]=custom[key];
+
+    }
+
+  });
+
+  return base;
+
+}
+
+
+/* =========================================================
+RENDER
+========================================================= */
+
+function render(){
+
+  set("backgroundImage",config.images.background);
+  set("heroImage",config.images.hero);
+
+  set("introEyebrow",config.intro.eyebrow);
+  set("introTitle",config.intro.title);
+  set("introText",config.intro.text);
+
+  set(
+    "servicesEyebrow",
+    config.servicesTitle.eyebrow
+  );
+
+  set(
+    "servicesTitle",
+    config.servicesTitle.title
+  );
+
+  set(
+    "priceEyebrow",
+    config.priceTitle.eyebrow
+  );
+
+  set(
+    "priceTitle",
+    config.priceTitle.title
+  );
+
+  set(
+    "bookingEyebrow",
+    config.booking.eyebrow
+  );
+
+  set(
+    "bookingTitle",
+    config.booking.title
+  );
+
+  set(
+    "ctaText",
+    config.cta.text
+  );
+
+  set(
+    "ctaUrl",
+    config.cta.url
+  );
+
+  set(
+    "contactEyebrow",
+    config.contact.eyebrow
+  );
+
+  set(
+    "contactTitle",
+    config.contact.title
+  );
+
+  set(
+    "lineLabel",
+    config.contact.lineLabel
+  );
+
+  set(
+    "line",
+    config.contact.line
+  );
+
+  set(
+    "tiktokLabel",
+    config.contact.tiktokLabel
+  );
+
+  set(
+    "tiktok",
+    config.contact.tiktok
+  );
+
+  set(
+    "musicUrl",
+    config.music.url
+  );
+
+  set(
+    "musicVolume",
+    config.music.volume
+  );
+
+  document.getElementById("musicEnabled")
+    .checked=!!config.music.enabled;
+
+  document.getElementById("musicAutoplay")
+    .checked=!!config.music.autoplay;
+
+  set(
+    "footerBrand",
+    config.footer.brand
+  );
+
+  set(
+    "footerCopy",
+    config.footer.copy
+  );
+
+  renderServices();
+  renderPrices();
+  renderSteps();
+
+  previewImage(
+    "backgroundImage",
+    "backgroundPreview"
+  );
+
+  previewImage(
+    "heroImage",
+    "heroPreview"
+  );
+
+}
+
+
+function set(id,value){
+
+  const el=document.getElementById(id);
+
+  if(el)
+    el.value=value ?? "";
+
+}
+
+
+/* =========================================================
+SERVICES
+========================================================= */
+
+function renderServices(){
+
+  const box =
+    document.getElementById("servicesList");
+
+  box.innerHTML="";
+
+  config.services.forEach((service,index)=>{
+
+    const item =
+      document.createElement("div");
+
+    item.className="item";
+
+    item.innerHTML=`
+
+      <div class="item-head">
+
+        <div class="item-title">
+          บริการที่ ${index+1}
+        </div>
+
+        <div class="item-actions">
+
+          ${
+            index>0
+            ?
+            `<button
+              class="btn"
+              onclick="moveService(${index},-1)">
+              ↑
+            </button>`
+            :
+            ""
+          }
+
+          ${
+            index<config.services.length-1
+            ?
+            `<button
+              class="btn"
+              onclick="moveService(${index},1)">
+              ↓
+            </button>`
+            :
+            ""
+          }
+
+          <button
+            class="btn danger"
+            onclick="deleteService(${index})">
+            ลบ
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label>ชื่อบริการ</label>
+
+          <input
+            value="${esc(service.name)}"
+            oninput="
+              config.services[${index}].name=this.value
+            ">
+
+        </div>
+
+        <div class="field">
+
+          <label>ราคา</label>
+
+          <input
+            value="${esc(service.price)}"
+            oninput="
+              config.services[${index}].price=this.value
+            ">
+
+        </div>
+
+        <div class="field full">
+
+          <label>รายละเอียด</label>
+
+          <textarea
+            oninput="
+              config.services[${index}].description=this.value
+            ">${escText(service.description)}</textarea>
+
+        </div>
+
+        <div class="field full">
+
+          <label>URL รูปภาพ</label>
+
+          <input
+            value="${esc(service.image || "")}"
+            placeholder="https://..."
+            oninput="
+              config.services[${index}].image=this.value
+            "
+            onchange="renderServices()">
+
+          ${
+            service.image
+            ?
+            `<img
+              class="preview"
+              src="${esc(service.image)}"
+              onerror="this.style.display='none'">`
+            :
+            ""
+          }
+
+        </div>
+
+      </div>
+
+      <div class="toggle">
+
+        <span>
+          แสดงบริการนี้บนเว็บไซต์
+        </span>
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            ${
+              service.enabled !== false
+              ? "checked"
+              : ""
+            }
+            onchange="
+              config.services[${index}].enabled=this.checked
+            ">
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+    `;
+
+    box.appendChild(item);
+
+  });
+
+}
+
+
+function addService(){
+
+  config.services.push({
+
+    name:"บริการใหม่",
+    price:"เริ่มต้น 199฿",
+    description:"รายละเอียดบริการ",
+    image:"",
+    enabled:true
+
+  });
+
+  renderServices();
+
+}
+
+
+function deleteService(index){
+
+  if(!confirm(
+    "ต้องการลบบริการนี้หรือไม่?"
+  )) return;
+
+  config.services.splice(index,1);
+
+  renderServices();
+
+}
+
+
+function moveService(index,direction){
+
+  const target =
+    index+direction;
+
+  if(
+    target<0 ||
+    target>=config.services.length
+  )
+    return;
+
+  [
+    config.services[index],
+    config.services[target]
+  ]=[
+    config.services[target],
+    config.services[index]
+  ];
+
+  renderServices();
+
+}
+
+
+/* =========================================================
+PRICE
+========================================================= */
+
+function renderPrices(){
+
+  const box =
+    document.getElementById("pricesList");
+
+  box.innerHTML="";
+
+  config.prices.forEach((price,index)=>{
+
+    const item =
+      document.createElement("div");
+
+    item.className="item";
+
+    item.innerHTML=`
+
+      <div class="item-head">
+
+        <div class="item-title">
+          รายการที่ ${index+1}
+        </div>
+
+        <button
+          class="btn danger"
+          onclick="deletePrice(${index})">
+          ลบ
+        </button>
+
+      </div>
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label>ชื่อรายการ</label>
+
+          <input
+            value="${esc(price.name)}"
+            oninput="
+              config.prices[${index}].name=this.value
+            ">
+
+        </div>
+
+        <div class="field">
+
+          <label>ระยะเวลา</label>
+
+          <input
+            value="${esc(price.duration)}"
+            oninput="
+              config.prices[${index}].duration=this.value
+            ">
+
+        </div>
+
+        <div class="field">
+
+          <label>ราคา</label>
+
+          <input
+            value="${esc(price.value)}"
+            oninput="
+              config.prices[${index}].value=this.value
+            ">
+
+        </div>
+
+      </div>
+
+    `;
+
+    box.appendChild(item);
+
+  });
+
+}
+
+
+function addPrice(){
+
+  config.prices.push({
+
+    name:"รายการใหม่",
+    duration:"30 นาที",
+    value:"199฿"
+
+  });
+
+  renderPrices();
+
+}
+
+
+function deletePrice(index){
+
+  if(!confirm(
+    "ต้องการลบรายการราคานี้หรือไม่?"
+  ))
+    return;
+
+  config.prices.splice(index,1);
+
+  renderPrices();
+
+}
+
+
+/* =========================================================
+BOOKING
+========================================================= */
+
+function renderSteps(){
+
+  const box =
+    document.getElementById("stepsList");
+
+  box.innerHTML="";
+
+  config.booking.steps.forEach((step,index)=>{
+
+    const item =
+      document.createElement("div");
+
+    item.className="item";
+
+    item.innerHTML=`
+
+      <div class="item-head">
+
+        <div class="item-title">
+          ขั้นตอนที่ ${index+1}
+        </div>
+
+        <button
+          class="btn danger"
+          onclick="deleteStep(${index})">
+          ลบ
+        </button>
+
+      </div>
+
+      <input
+        value="${esc(step)}"
+        oninput="
+          config.booking.steps[${index}]=this.value
+        ">
+
+    `;
+
+    box.appendChild(item);
+
+  });
+
+}
+
+
+function addStep(){
+
+  config.booking.steps.push(
+    "ขั้นตอนใหม่"
+  );
+
+  renderSteps();
+
+}
+
+
+function deleteStep(index){
+
+  if(!confirm(
+    "ต้องการลบขั้นตอนนี้หรือไม่?"
+  ))
+    return;
+
+  config.booking.steps.splice(index,1);
+
+  renderSteps();
+
+}
+
+
+/* =========================================================
+COLLECT
+========================================================= */
+
+function collect(){
+
+  config.images.background =
+    document.getElementById(
+      "backgroundImage"
+    ).value.trim();
+
+  config.images.hero =
+    document.getElementById(
+      "heroImage"
+    ).value.trim();
+
+
+  config.intro.eyebrow =
+    document.getElementById(
+      "introEyebrow"
+    ).value;
+
+  config.intro.title =
+    document.getElementById(
+      "introTitle"
+    ).value;
+
+  config.intro.text =
+    document.getElementById(
+      "introText"
+    ).value;
+
+
+  config.servicesTitle.eyebrow =
+    document.getElementById(
+      "servicesEyebrow"
+    ).value;
+
+  config.servicesTitle.title =
+    document.getElementById(
+      "servicesTitle"
+    ).value;
+
+
+  config.priceTitle.eyebrow =
+    document.getElementById(
+      "priceEyebrow"
+    ).value;
+
+  config.priceTitle.title =
+    document.getElementById(
+      "priceTitle"
+    ).value;
+
+
+  config.booking.eyebrow =
+    document.getElementById(
+      "bookingEyebrow"
+    ).value;
+
+  config.booking.title =
+    document.getElementById(
+      "bookingTitle"
+    ).value;
+
+
+  config.cta.text =
+    document.getElementById(
+      "ctaText"
+    ).value;
+
+  config.cta.url =
+    document.getElementById(
+      "ctaUrl"
+    ).value;
+
+
+  config.contact.eyebrow =
+    document.getElementById(
+      "contactEyebrow"
+    ).value;
+
+  config.contact.title =
+    document.getElementById(
+      "contactTitle"
+    ).value;
+
+  config.contact.lineLabel =
+    document.getElementById(
+      "lineLabel"
+    ).value;
+
+  config.contact.line =
+    document.getElementById(
+      "line"
+    ).value;
+
+  config.contact.tiktokLabel =
+    document.getElementById(
+      "tiktokLabel"
+    ).value;
+
+  config.contact.tiktok =
+    document.getElementById(
+      "tiktok"
+    ).value;
+
+
+  config.music.url =
+    document.getElementById(
+      "musicUrl"
+    ).value.trim();
+
+  config.music.volume =
+    Number(
+      document.getElementById(
+        "musicVolume"
+      ).value || .45
+    );
+
+  config.music.enabled =
+    document.getElementById(
+      "musicEnabled"
+    ).checked;
+
+  config.music.autoplay =
+    document.getElementById(
+      "musicAutoplay"
+    ).checked;
+
+
+  config.footer.brand =
+    document.getElementById(
+      "footerBrand"
+    ).value;
+
+  config.footer.copy =
+    document.getElementById(
+      "footerCopy"
+    ).value;
+
+}
+
+
+/* =========================================================
+SAVE
+========================================================= */
+
+async function saveConfig(){
+
+  collect();
+
+  const status =
+    document.getElementById(
+      "saveStatus"
+    );
+
+  status.textContent =
+    "กำลังบันทึก...";
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("bobbes_oracle_config")
+    .upsert({
+
+      id:1,
+
+      config:config,
+
+      published:true
+
+    },{
+      onConflict:"id"
+
+    });
+
+  if(error){
+
+    console.error(error);
+
+    status.textContent =
+      "บันทึกไม่สำเร็จ";
+
+    alert(
+      "บันทึกไม่สำเร็จ\n\n"+
+      error.message
+    );
+
+    return;
+
+  }
+
+  status.textContent =
+    "✓ บันทึกเว็บไซต์เรียบร้อยแล้ว";
+
+  setTimeout(()=>{
+
+    status.textContent="";
+
+  },3000);
+
+}
+
+
+/* =========================================================
+IMAGE
+========================================================= */
+
+function previewImage(inputId,previewId){
+
+  const input =
+    document.getElementById(inputId);
+
+  const image =
+    document.getElementById(previewId);
+
+  if(!input.value.trim()){
+
+    image.style.display="none";
+
+    return;
+
+  }
+
+  image.src =
+    input.value.trim();
+
+  image.onload=()=>{
+    image.style.display="block";
+  };
+
+  image.onerror=()=>{
+    image.style.display="none";
+  };
+
+}
+
+
+document
+.getElementById("backgroundImage")
+.addEventListener(
+  "input",
+  ()=>{
+    previewImage(
+      "backgroundImage",
+      "backgroundPreview"
+    );
+  }
+);
+
+
+document
+.getElementById("heroImage")
+.addEventListener(
+  "input",
+  ()=>{
+    previewImage(
+      "heroImage",
+      "heroPreview"
+    );
+  }
+);
+
+
+/* =========================================================
+PREVIEW
+========================================================= */
+
+function previewSite(){
+
+  window.open(
+    "menu.html",
+    "_blank"
+  );
+
+}
+
+
+/* =========================================================
+ESCAPE
+========================================================= */
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/"/g,"&quot;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+
+function escText(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+
+/* =========================================================
+START
+========================================================= */
+
+init();
+
+</script>
+
+</body>
+</html>
