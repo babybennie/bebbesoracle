@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
 
 <title>Bobbe’s oracle</title>
+
+<meta
+    name="theme-color"
+    content="#080606"
+>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Niramit:wght@200;300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Niramit:wght@200;300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<!-- ======================================================
+     SUPABASE
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <style>
 
@@ -18,6 +38,7 @@
 ========================================================= */
 
 :root{
+
     --bg:#080606;
     --bg-soft:#100b0b;
 
@@ -32,11 +53,8 @@
     --purple:#5b3d68;
     --purple-soft:#8c6599;
 
-    --card:rgba(15,10,11,.68);
-
     --line:rgba(200,164,124,.25);
 
-    --glow:rgba(214,179,135,.20);
 }
 
 
@@ -55,6 +73,7 @@ html{
 }
 
 body{
+
     min-height:100vh;
 
     background:#080606;
@@ -66,6 +85,7 @@ body{
     overflow-x:hidden;
 
     -webkit-font-smoothing:antialiased;
+
     text-rendering:optimizeLegibility;
 }
 
@@ -75,6 +95,7 @@ body{
 ========================================================= */
 
 .page-bg{
+
     position:fixed;
 
     inset:0;
@@ -93,11 +114,13 @@ body{
 }
 
 .page-bg img{
+
     position:absolute;
 
     inset:0;
 
     width:100%;
+
     height:100%;
 
     object-fit:cover;
@@ -113,12 +136,10 @@ body{
 
     transform:scale(1.025);
 
-    transition:
-        opacity .5s ease,
-        filter .5s ease;
 }
 
 .page-bg::before{
+
     content:"";
 
     position:absolute;
@@ -128,6 +149,7 @@ body{
     z-index:1;
 
     background:
+
         radial-gradient(
             ellipse at 50% 15%,
             rgba(117,76,129,.12),
@@ -155,6 +177,7 @@ body{
 }
 
 .page-bg::after{
+
     content:"";
 
     position:absolute;
@@ -197,9 +220,11 @@ body{
 ========================================================= */
 
 .magic-glow{
+
     position:fixed;
 
     width:280px;
+
     height:280px;
 
     border-radius:50%;
@@ -225,14 +250,12 @@ body{
 .magic-glow.two{
     top:42%;
     right:-130px;
-
     animation-delay:-4s;
 }
 
 .magic-glow.three{
     left:20%;
     bottom:-160px;
-
     animation-delay:-8s;
 }
 
@@ -261,6 +284,7 @@ body{
 ========================================================= */
 
 .page{
+
     position:relative;
 
     width:min(100%,760px);
@@ -270,16 +294,16 @@ body{
     padding:
         max(14px,env(safe-area-inset-top))
         14px
-        calc(70px + env(safe-area-inset-bottom));
+        calc(80px + env(safe-area-inset-bottom));
 }
 
 
 /* =========================================================
-   HEADER IMAGE
-   ไม่มีข้อความ overlay
+   HERO
 ========================================================= */
 
 .hero{
+
     position:relative;
 
     width:100%;
@@ -288,15 +312,14 @@ body{
 }
 
 .hero-frame{
+
     position:relative;
 
     padding:7px;
 }
 
-
-/* แสงฟุ้งรอบกรอบ */
-
 .hero-frame::before{
+
     content:"";
 
     position:absolute;
@@ -315,14 +338,10 @@ body{
     filter:blur(22px);
 
     z-index:-2;
-
-    opacity:.9;
 }
 
-
-/* glow สีม่วงบาง ๆ */
-
 .hero-frame::after{
+
     content:"";
 
     position:absolute;
@@ -344,6 +363,7 @@ body{
 }
 
 .hero-image-wrap{
+
     position:relative;
 
     overflow:hidden;
@@ -359,10 +379,8 @@ body{
         0 0 35px rgba(201,158,109,.08);
 }
 
-
-/* เส้นกรอบแบบนุ่ม ไม่แข็ง */
-
 .hero-image-wrap::before{
+
     content:"";
 
     position:absolute;
@@ -380,6 +398,7 @@ body{
 }
 
 .hero-image-wrap::after{
+
     content:"";
 
     position:absolute;
@@ -401,9 +420,11 @@ body{
 }
 
 .hero-image{
+
     display:block;
 
     width:100%;
+
     height:100%;
 
     object-fit:cover;
@@ -417,6 +438,7 @@ body{
 ========================================================= */
 
 .section{
+
     position:relative;
 
     margin:34px 0;
@@ -428,6 +450,7 @@ body{
 ========================================================= */
 
 .section-title{
+
     position:relative;
 
     text-align:center;
@@ -438,6 +461,7 @@ body{
 }
 
 .section-title .eyebrow{
+
     display:block;
 
     font-family:'Cormorant Garamond',serif;
@@ -456,6 +480,7 @@ body{
 }
 
 .section-title h2{
+
     font-size:26px;
 
     line-height:1.3;
@@ -468,15 +493,12 @@ body{
         0 0 18px rgba(220,187,145,.13);
 }
 
+.ornament{
 
-/* =========================================================
-   ORNAMENT
-========================================================= */
-
-.section-title .ornament{
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     gap:9px;
@@ -484,11 +506,13 @@ body{
     margin-top:8px;
 }
 
-.section-title .ornament::before,
-.section-title .ornament::after{
+.ornament::before,
+.ornament::after{
+
     content:"";
 
     width:58px;
+
     height:1px;
 
     background:
@@ -499,11 +523,12 @@ body{
         );
 }
 
-.section-title .ornament::after{
+.ornament::after{
     transform:rotate(180deg);
 }
 
 .spark{
+
     color:var(--gold-light);
 
     font-size:11px;
@@ -516,20 +541,13 @@ body{
 
     0%,100%{
         opacity:.35;
-
-        transform:
-            scale(.8)
-            rotate(0);
-
+        transform:scale(.8) rotate(0);
         text-shadow:none;
     }
 
     50%{
         opacity:1;
-
-        transform:
-            scale(1.3)
-            rotate(18deg);
+        transform:scale(1.3) rotate(18deg);
 
         text-shadow:
             0 0 6px rgba(235,211,173,.8),
@@ -543,6 +561,7 @@ body{
 ========================================================= */
 
 .intro-card{
+
     position:relative;
 
     padding:22px 18px;
@@ -560,6 +579,7 @@ body{
         rgba(200,164,124,.18);
 
     backdrop-filter:blur(8px);
+
     -webkit-backdrop-filter:blur(8px);
 
     box-shadow:
@@ -567,10 +587,8 @@ body{
         inset 0 0 25px rgba(200,164,124,.025);
 }
 
-
-/* glow ด้านใน */
-
 .intro-card::before{
+
     content:"";
 
     position:absolute;
@@ -590,6 +608,7 @@ body{
 }
 
 .intro-card p{
+
     position:relative;
 
     text-align:center;
@@ -609,6 +628,7 @@ body{
 ========================================================= */
 
 .services{
+
     display:grid;
 
     grid-template-columns:1fr;
@@ -617,6 +637,7 @@ body{
 }
 
 .service-card{
+
     position:relative;
 
     padding:20px 17px;
@@ -636,6 +657,7 @@ body{
         rgba(200,164,124,.19);
 
     backdrop-filter:blur(8px);
+
     -webkit-backdrop-filter:blur(8px);
 
     box-shadow:
@@ -647,18 +669,18 @@ body{
         box-shadow .3s ease;
 }
 
-
-/* แสงฟุ้งบนการ์ด */
-
 .service-card::before{
+
     content:"";
 
     position:absolute;
 
     width:150px;
+
     height:150px;
 
     right:-75px;
+
     top:-80px;
 
     border-radius:50%;
@@ -669,18 +691,18 @@ body{
     filter:blur(30px);
 }
 
-
-/* แสงทองอีกด้าน */
-
 .service-card::after{
+
     content:"";
 
     position:absolute;
 
     width:90px;
+
     height:90px;
 
     left:-55px;
+
     bottom:-55px;
 
     border-radius:50%;
@@ -692,6 +714,7 @@ body{
 }
 
 .service-card:hover{
+
     transform:translateY(-2px);
 
     border-color:
@@ -703,7 +726,9 @@ body{
 }
 
 .service-top{
+
     position:relative;
+
     z-index:2;
 
     display:flex;
@@ -716,6 +741,7 @@ body{
 }
 
 .service-name{
+
     font-size:19px;
 
     font-weight:600;
@@ -726,6 +752,7 @@ body{
 }
 
 .service-price{
+
     flex-shrink:0;
 
     color:var(--gold-light);
@@ -740,6 +767,7 @@ body{
 }
 
 .service-desc{
+
     position:relative;
 
     z-index:2;
@@ -763,6 +791,7 @@ body{
 ========================================================= */
 
 .price-box{
+
     position:relative;
 
     padding:7px;
@@ -781,6 +810,7 @@ body{
 }
 
 .price-box::before{
+
     content:"";
 
     position:absolute;
@@ -802,6 +832,7 @@ body{
 }
 
 .price-inner{
+
     border-radius:19px;
 
     background:
@@ -813,10 +844,12 @@ body{
     overflow:hidden;
 
     backdrop-filter:blur(8px);
+
     -webkit-backdrop-filter:blur(8px);
 }
 
 .price-row{
+
     display:flex;
 
     justify-content:space-between;
@@ -837,6 +870,7 @@ body{
 }
 
 .price-name{
+
     color:#d6c7b7;
 
     font-size:15px;
@@ -845,6 +879,7 @@ body{
 }
 
 .price-duration{
+
     display:block;
 
     color:#8e8074;
@@ -855,6 +890,7 @@ body{
 }
 
 .price-value{
+
     flex-shrink:0;
 
     color:var(--gold-light);
@@ -872,12 +908,14 @@ body{
 ========================================================= */
 
 .steps{
+
     display:grid;
 
     gap:12px;
 }
 
 .step{
+
     position:relative;
 
     display:flex;
@@ -901,6 +939,7 @@ body{
         rgba(200,164,124,.16);
 
     backdrop-filter:blur(7px);
+
     -webkit-backdrop-filter:blur(7px);
 
     box-shadow:
@@ -908,7 +947,9 @@ body{
 }
 
 .step-number{
+
     width:35px;
+
     height:35px;
 
     flex:0 0 35px;
@@ -916,6 +957,7 @@ body{
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     border-radius:50%;
@@ -931,12 +973,10 @@ body{
 
     background:
         rgba(200,164,124,.035);
-
-    box-shadow:
-        0 0 16px rgba(200,164,124,.05);
 }
 
 .step-text{
+
     color:#d2c2b0;
 
     font-size:14px;
@@ -954,17 +994,20 @@ body{
 ========================================================= */
 
 .cta{
+
     margin:36px 0 34px;
 
     text-align:center;
 }
 
 .cta-button{
+
     position:relative;
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     min-height:56px;
@@ -1005,36 +1048,8 @@ body{
         box-shadow .3s ease;
 }
 
-.cta-button::before{
-    content:"";
-
-    position:absolute;
-
-    inset:-50%;
-
-    background:
-        linear-gradient(
-            115deg,
-            transparent 40%,
-            rgba(255,255,255,.40) 50%,
-            transparent 60%
-        );
-
-    transform:
-        translateX(-85%)
-        rotate(8deg);
-
-    transition:
-        transform .85s ease;
-}
-
-.cta-button:hover::before{
-    transform:
-        translateX(85%)
-        rotate(8deg);
-}
-
 .cta-button:hover{
+
     transform:translateY(-2px);
 
     box-shadow:
@@ -1048,6 +1063,7 @@ body{
 ========================================================= */
 
 .contact-card{
+
     position:relative;
 
     padding:24px 18px;
@@ -1067,34 +1083,15 @@ body{
     text-align:center;
 
     backdrop-filter:blur(8px);
+
     -webkit-backdrop-filter:blur(8px);
 
     box-shadow:
         0 15px 38px rgba(0,0,0,.16);
 }
 
-.contact-card::before{
-    content:"";
-
-    position:absolute;
-
-    inset:-15px;
-
-    z-index:-1;
-
-    border-radius:35px;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(200,164,124,.06),
-            transparent 70%
-        );
-
-    filter:blur(18px);
-}
-
 .contact-row{
+
     display:flex;
 
     justify-content:center;
@@ -1109,12 +1106,14 @@ body{
 }
 
 .contact-label{
+
     color:#8f8175;
 
     font-size:13px;
 }
 
 .contact-value{
+
     color:#e0ceb7;
 
     font-size:15px;
@@ -1128,12 +1127,14 @@ body{
 ========================================================= */
 
 .footer{
+
     padding-top:34px;
 
     text-align:center;
 }
 
 .footer-brand{
+
     font-family:'Cormorant Garamond',serif;
 
     color:var(--gold);
@@ -1141,12 +1142,10 @@ body{
     font-size:25px;
 
     letter-spacing:.04em;
-
-    text-shadow:
-        0 0 15px rgba(200,164,124,.10);
 }
 
 .footer-copy{
+
     margin-top:5px;
 
     color:#756a61;
@@ -1158,11 +1157,11 @@ body{
 
 
 /* =========================================================
-   FLOATING CONTROL
-   เพลง + ADMIN
+   FLOATING CONTROLS
 ========================================================= */
 
 .floating-controls{
+
     position:fixed;
 
     right:
@@ -1190,6 +1189,7 @@ body{
         rgba(200,164,124,.19);
 
     backdrop-filter:blur(13px);
+
     -webkit-backdrop-filter:blur(13px);
 
     box-shadow:
@@ -1197,16 +1197,16 @@ body{
         0 0 20px rgba(200,164,124,.05);
 }
 
-
-/* ปุ่ม */
-
 .floating-control{
+
     width:39px;
+
     height:39px;
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     flex:0 0 39px;
@@ -1235,32 +1235,14 @@ body{
 
     font-size:20px;
 
-    box-shadow:
-        inset 0 0 10px rgba(200,164,124,.04),
-        0 0 12px rgba(200,164,124,.04);
-
     transition:
         transform .25s ease,
         border-color .25s ease,
         box-shadow .25s ease;
 }
 
-
-/* Admin */
-
-.admin-control{
-    font-size:18px;
-
-    filter:
-        drop-shadow(
-            0 0 5px rgba(218,181,137,.13)
-        );
-}
-
-
-/* Hover */
-
 .floating-control:hover{
+
     transform:translateY(-2px);
 
     border-color:
@@ -1271,10 +1253,18 @@ body{
         0 0 18px rgba(200,164,124,.12);
 }
 
+.admin-control{
 
-/* เพลงกำลังเล่น */
+    font-size:18px;
 
-.floating-control.music-playing{
+    filter:
+        drop-shadow(
+            0 0 5px rgba(218,181,137,.13)
+        );
+}
+
+.music-playing{
+
     border-color:
         rgba(234,212,180,.72);
 
@@ -1284,6 +1274,7 @@ body{
 }
 
 .music-playing #musicIcon{
+
     animation:
         musicPulse 1.5s ease-in-out infinite;
 }
@@ -1292,13 +1283,11 @@ body{
 
     0%,100%{
         transform:scale(1);
-
         opacity:.7;
     }
 
     50%{
         transform:scale(1.18);
-
         opacity:1;
 
         text-shadow:
@@ -1312,6 +1301,7 @@ body{
 ========================================================= */
 
 .sparkles{
+
     position:fixed;
 
     inset:0;
@@ -1324,6 +1314,7 @@ body{
 }
 
 .sparkle{
+
     position:absolute;
 
     color:
@@ -1347,35 +1338,30 @@ body{
 .sparkle:nth-child(2){
     top:31%;
     right:8%;
-
     animation-delay:1.4s;
 }
 
 .sparkle:nth-child(3){
     top:58%;
     left:5%;
-
     animation-delay:2.2s;
 }
 
 .sparkle:nth-child(4){
     top:76%;
     right:6%;
-
     animation-delay:.7s;
 }
 
 .sparkle:nth-child(5){
     top:44%;
     left:48%;
-
     animation-delay:1.8s;
 }
 
 .sparkle:nth-child(6){
     top:88%;
     left:17%;
-
     animation-delay:2.8s;
 }
 
@@ -1404,10 +1390,11 @@ body{
 
 
 /* =========================================================
-   EMPTY STATE
+   EMPTY / ERROR
 ========================================================= */
 
 .empty-state{
+
     padding:25px 18px;
 
     text-align:center;
@@ -1427,66 +1414,93 @@ body{
 
 
 /* =========================================================
+   LOADING
+========================================================= */
+
+.loading-state{
+
+    padding:25px 18px;
+
+    text-align:center;
+
+    color:#b6a28e;
+
+    font-size:14px;
+
+    opacity:.8;
+}
+
+
+/* =========================================================
    RESPONSIVE
 ========================================================= */
 
 @media (min-width:620px){
 
     .page{
+
         padding-left:22px;
+
         padding-right:22px;
     }
 
     .services{
+
         grid-template-columns:1fr 1fr;
     }
 
     .service-card:first-child{
+
         grid-column:span 2;
     }
 
     .hero{
+
         margin-top:18px;
     }
 }
 
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
 @media (max-width:480px){
 
     .page{
+
         padding-left:12px;
+
         padding-right:12px;
     }
 
     .hero{
+
         margin-bottom:25px;
     }
 
     .section{
+
         margin:30px 0;
     }
 
     .section-title h2{
+
         font-size:24px;
     }
 
     .service-name{
+
         font-size:18px;
     }
 
     .service-price{
+
         font-size:15px;
     }
 
     .price-row{
+
         padding:13px 14px;
     }
 
     .floating-controls{
+
         right:
             max(9px,env(safe-area-inset-right));
 
@@ -1499,7 +1513,9 @@ body{
     }
 
     .floating-control{
+
         width:37px;
+
         height:37px;
 
         flex-basis:37px;
@@ -1508,14 +1524,10 @@ body{
     }
 
     .admin-control{
+
         font-size:17px;
     }
 }
-
-
-/* =========================================================
-   REDUCE MOTION
-========================================================= */
 
 @media (prefers-reduced-motion:reduce){
 
@@ -1534,43 +1546,38 @@ body{
 }
 
 </style>
+
 </head>
 
 
 <body>
 
 
-<!-- =======================================================
+<!-- ======================================================
      BACKGROUND
-======================================================= -->
+====================================================== -->
 
 <div class="page-bg">
 
     <img
         id="backgroundImage"
-
         src="https://i.postimg.cc/q7yxHpK6/46BC4247-B73D-48B4-9A62-F06BA85D945B.png"
-
         alt=""
-
         loading="eager"
-
         referrerpolicy="no-referrer"
     >
 
 </div>
 
 
-<!-- Ambient glow -->
-
 <div class="magic-glow one"></div>
 <div class="magic-glow two"></div>
 <div class="magic-glow three"></div>
 
 
-<!-- =======================================================
+<!-- ======================================================
      SPARKLES
-======================================================= -->
+====================================================== -->
 
 <div
     class="sparkles"
@@ -1587,82 +1594,61 @@ body{
 </div>
 
 
-<!-- =======================================================
-     FLOATING CONTROLS
-======================================================= -->
+<!-- ======================================================
+     FLOATING BUTTONS
+====================================================== -->
 
 <div class="floating-controls">
 
-
-    <!-- MUSIC -->
-
     <button
         id="musicButton"
-
         class="floating-control"
-
         type="button"
-
         aria-label="เปิดเพลง"
-
         title="เปิดเพลง"
     >
 
-        <span id="musicIcon">
-            ♪
-        </span>
+        <span id="musicIcon">♪</span>
 
     </button>
 
 
-    <!-- ADMIN -->
-
     <a
         id="adminButton"
-
         class="floating-control admin-control"
-
         href="admin.html"
-
         aria-label="เข้าสู่หลังบ้าน"
-
         title="Admin"
     >
 
-        <span>
-            🧙🏻‍♀️
-        </span>
+        <span>🧙🏻‍♀️</span>
 
     </a>
 
 </div>
 
 
-<!-- =======================================================
-     MUSIC
-======================================================= -->
+<!-- ======================================================
+     AUDIO
+====================================================== -->
 
 <audio
     id="backgroundMusic"
-
     loop
-
-    preload="none"
+    preload="auto"
 ></audio>
 
 
-
-<!-- =======================================================
+<!-- ======================================================
      MAIN
-======================================================= -->
+====================================================== -->
 
 <main class="page">
 
 
-    <!-- ===================================================
+    <!-- ==================================================
          HERO
-         ไม่มีข้อความทับบนรูป
-    ==================================================== -->
+    =================================================== -->
 
     <header class="hero">
 
@@ -1672,15 +1658,10 @@ body{
 
                 <img
                     id="heroImage"
-
                     class="hero-image"
-
                     src="https://i.postimg.cc/WzYS5XRR/F656C5CF-B6FB-4101-9F4A-A69A16B8BA84.png"
-
                     alt="Bobbe’s oracle"
-
                     loading="eager"
-
                     referrerpolicy="no-referrer"
                 >
 
@@ -1691,10 +1672,9 @@ body{
     </header>
 
 
-
-    <!-- ===================================================
+    <!-- ==================================================
          INTRO
-    ==================================================== -->
+    =================================================== -->
 
     <section class="section">
 
@@ -1702,23 +1682,18 @@ body{
 
             <span
                 id="introEyebrow"
-
                 class="eyebrow"
             >
                 TAROT READING
             </span>
 
-
             <h2 id="introTitle">
                 เปิดไพ่เพื่อค้นหาคำตอบ
             </h2>
 
-
             <div class="ornament">
 
-                <span class="spark">
-                    ✦
-                </span>
+                <span class="spark">✦</span>
 
             </div>
 
@@ -1728,8 +1703,10 @@ body{
         <div class="intro-card">
 
             <p id="introText">
+
                 พื้นที่สำหรับดูดวงและคำแนะนำจากไพ่ทาโรต์
                 เพื่อช่วยให้คุณมองเห็นสิ่งต่าง ๆ ได้ชัดเจนขึ้น
+
             </p>
 
         </div>
@@ -1737,10 +1714,9 @@ body{
     </section>
 
 
-
-    <!-- ===================================================
+    <!-- ==================================================
          SERVICES
-    ==================================================== -->
+    =================================================== -->
 
     <section class="section">
 
@@ -1748,23 +1724,18 @@ body{
 
             <span
                 id="servicesEyebrow"
-
                 class="eyebrow"
             >
                 SERVICES
             </span>
 
-
             <h2 id="servicesTitle">
                 เมนูพยากรณ์
             </h2>
 
-
             <div class="ornament">
 
-                <span class="spark">
-                    ✦
-                </span>
+                <span class="spark">✦</span>
 
             </div>
 
@@ -1773,17 +1744,21 @@ body{
 
         <div
             id="servicesList"
-
             class="services"
-        ></div>
+        >
+
+            <div class="loading-state">
+                กำลังเปิดคำพยากรณ์…
+            </div>
+
+        </div>
 
     </section>
 
 
-
-    <!-- ===================================================
+    <!-- ==================================================
          PRICE
-    ==================================================== -->
+    =================================================== -->
 
     <section class="section">
 
@@ -1791,23 +1766,18 @@ body{
 
             <span
                 id="priceEyebrow"
-
                 class="eyebrow"
             >
                 PRICE
             </span>
 
-
             <h2 id="priceTitle">
                 ค่าบริการ
             </h2>
 
-
             <div class="ornament">
 
-                <span class="spark">
-                    ✦
-                </span>
+                <span class="spark">✦</span>
 
             </div>
 
@@ -1818,19 +1788,23 @@ body{
 
             <div
                 id="priceList"
-
                 class="price-inner"
-            ></div>
+            >
+
+                <div class="loading-state">
+                    กำลังโหลดค่าบริการ…
+                </div>
+
+            </div>
 
         </div>
 
     </section>
 
 
-
-    <!-- ===================================================
+    <!-- ==================================================
          BOOKING
-    ==================================================== -->
+    =================================================== -->
 
     <section class="section">
 
@@ -1838,23 +1812,18 @@ body{
 
             <span
                 id="bookingEyebrow"
-
                 class="eyebrow"
             >
                 BOOKING
             </span>
 
-
             <h2 id="bookingTitle">
                 วิธีจองคิว
             </h2>
 
-
             <div class="ornament">
 
-                <span class="spark">
-                    ✦
-                </span>
+                <span class="spark">✦</span>
 
             </div>
 
@@ -1863,41 +1832,36 @@ body{
 
         <div
             id="bookingSteps"
-
             class="steps"
         ></div>
 
     </section>
 
 
-
-    <!-- ===================================================
+    <!-- ==================================================
          CTA
-    ==================================================== -->
+    =================================================== -->
 
     <section class="cta">
 
         <a
             id="ctaButton"
-
             class="cta-button"
-
             href="https://lin.ee/s6TdSA3X"
-
             target="_blank"
-
             rel="noopener noreferrer"
         >
+
             จองคิวเลย
+
         </a>
 
     </section>
 
 
-
-    <!-- ===================================================
+    <!-- ==================================================
          CONTACT
-    ==================================================== -->
+    =================================================== -->
 
     <section class="section">
 
@@ -1905,23 +1869,18 @@ body{
 
             <span
                 id="contactEyebrow"
-
                 class="eyebrow"
             >
                 CONTACT
             </span>
 
-
             <h2 id="contactTitle">
                 ติดต่อเรา
             </h2>
 
-
             <div class="ornament">
 
-                <span class="spark">
-                    ✦
-                </span>
+                <span class="spark">✦</span>
 
             </div>
 
@@ -1934,16 +1893,13 @@ body{
 
                 <span
                     id="lineLabel"
-
                     class="contact-label"
                 >
                     Line :
                 </span>
 
-
                 <span
                     id="lineValue"
-
                     class="contact-value"
                 >
                     @856dmoet
@@ -1956,16 +1912,13 @@ body{
 
                 <span
                     id="tiktokLabel"
-
                     class="contact-label"
                 >
                     TikTok :
                 </span>
 
-
                 <span
                     id="tiktokValue"
-
                     class="contact-value"
                 >
                     Bobbe’s oracle
@@ -1978,31 +1931,28 @@ body{
     </section>
 
 
-
-    <!-- ===================================================
+    <!-- ==================================================
          FOOTER
-    ==================================================== -->
+    =================================================== -->
 
     <footer class="footer">
 
         <div
             id="footerBrand"
-
             class="footer-brand"
         >
             Bobbe’s oracle
         </div>
 
-
         <div
             id="footerCopy"
-
             class="footer-copy"
         >
             TAROT READING & GUIDANCE
         </div>
 
     </footer>
+
 
 </main>
 
@@ -2011,15 +1961,29 @@ body{
 <script>
 
 /* =========================================================
+   SUPABASE CONFIG
+========================================================= */
+
+const SUPABASE_URL =
+    "https://lastxtiqlnwyuaffjcto.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_AWA4vuJobNXRMCxjmVDJZg_7390ZfdT";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =========================================================
    DEFAULT CONFIG
+   ใช้เป็น fallback เท่านั้น
 ========================================================= */
 
 const DEFAULT_CONFIG = {
-
-
-    /* =====================================================
-       IMAGES
-    ===================================================== */
 
     images:{
 
@@ -2032,41 +1996,17 @@ const DEFAULT_CONFIG = {
     },
 
 
-    /* =====================================================
-       MUSIC
-    ===================================================== */
-
-    music:{
-
-        enabled:true,
-
-        url:"",
-
-        autoplay:false
-
-    },
-
-
-    /* =====================================================
-       INTRO
-    ===================================================== */
-
     intro:{
 
         eyebrow:"TAROT READING",
 
-        title:
-            "เปิดไพ่เพื่อค้นหาคำตอบ",
+        title:"เปิดไพ่เพื่อค้นหาคำตอบ",
 
         text:
             "พื้นที่สำหรับดูดวงและคำแนะนำจากไพ่ทาโรต์ เพื่อช่วยให้คุณมองเห็นสิ่งต่าง ๆ ได้ชัดเจนขึ้น"
 
     },
 
-
-    /* =====================================================
-       SERVICES TITLE
-    ===================================================== */
 
     servicesTitle:{
 
@@ -2077,84 +2017,50 @@ const DEFAULT_CONFIG = {
     },
 
 
-    /* =====================================================
-       SERVICES
-       Admin เพิ่ม / ลบ / แก้ได้
-    ===================================================== */
-
     services:[
 
         {
-
-            name:
-                "ดูดวงทั่วไป",
-
-            price:
-                "เริ่มต้น 199฿",
-
+            name:"ดูดวงทั่วไป",
+            price:"เริ่มต้น 199฿",
             description:
-                "ภาพรวมชีวิต คำแนะนำในแต่ละเรื่อง และแนวโน้มที่ควรรู้"
-
+                "ภาพรวมชีวิต คำแนะนำในแต่ละเรื่อง และแนวโน้มที่ควรรู้",
+            enabled:true
         },
 
         {
-
-            name:
-                "ดูดวงความรัก",
-
-            price:
-                "เริ่มต้น 199฿",
-
+            name:"ดูดวงความรัก",
+            price:"เริ่มต้น 199฿",
             description:
-                "ความสัมพันธ์ คนรัก คนเก่า ความรู้สึก และแนวโน้มของความสัมพันธ์"
-
+                "ความสัมพันธ์ คนรัก คนเก่า ความรู้สึก และแนวโน้มของความสัมพันธ์",
+            enabled:true
         },
 
         {
-
-            name:
-                "ดูดวงการเงิน",
-
-            price:
-                "เริ่มต้น 199฿",
-
+            name:"ดูดวงการเงิน",
+            price:"เริ่มต้น 199฿",
             description:
-                "การเงิน งาน รายได้ โอกาสใหม่ ๆ และสิ่งที่ควรระวัง"
-
+                "การเงิน งาน รายได้ โอกาสใหม่ ๆ และสิ่งที่ควรระวัง",
+            enabled:true
         },
 
         {
-
-            name:
-                "ดูดวงการงาน",
-
-            price:
-                "เริ่มต้น 199฿",
-
+            name:"ดูดวงการงาน",
+            price:"เริ่มต้น 199฿",
             description:
-                "หน้าที่ การงาน เป้าหมาย ความก้าวหน้า และทิศทางในอนาคต"
-
+                "หน้าที่ การงาน เป้าหมาย ความก้าวหน้า และทิศทางในอนาคต",
+            enabled:true
         },
 
         {
-
-            name:
-                "ดูดวงเฉพาะเรื่อง",
-
-            price:
-                "เริ่มต้น 299฿",
-
+            name:"ดูดวงเฉพาะเรื่อง",
+            price:"เริ่มต้น 299฿",
             description:
-                "สำหรับคำถามเฉพาะด้าน เช่น ครอบครัว การย้ายบ้าน หรือเรื่องที่ต้องการคำแนะนำเพิ่มเติม"
-
+                "สำหรับคำถามเฉพาะด้าน และสิ่งที่ต้องการคำแนะนำเพิ่มเติม",
+            enabled:true
         }
 
     ],
 
-
-    /* =====================================================
-       PRICE
-    ===================================================== */
 
     priceTitle:{
 
@@ -2168,81 +2074,49 @@ const DEFAULT_CONFIG = {
     prices:[
 
         {
-
             name:"คำถาม",
-
             duration:"1 คำถาม",
-
             value:"9฿"
-
         },
 
         {
-
             name:"ดูดวงทั่วไป",
-
             duration:"30 นาที",
-
             value:"199฿"
-
         },
 
         {
-
             name:"ดูดวงความรัก",
-
             duration:"30 นาที",
-
             value:"199฿"
-
         },
 
         {
-
             name:"ดูดวงการเงิน",
-
             duration:"30 นาที",
-
             value:"199฿"
-
         },
 
         {
-
             name:"ดูดวงการงาน",
-
             duration:"30 นาที",
-
             value:"199฿"
-
         },
 
         {
-
             name:"ดูดวงเฉพาะเรื่อง",
-
             duration:"30 นาที",
-
             value:"299฿"
-
         },
 
         {
-
             name:"พิเศษ / เจาะลึก",
-
             duration:"60 นาที",
-
             value:"499฿"
-
         }
 
     ],
 
-
-    /* =====================================================
-       BOOKING
-    ===================================================== */
 
     booking:{
 
@@ -2265,24 +2139,14 @@ const DEFAULT_CONFIG = {
     },
 
 
-    /* =====================================================
-       CTA
-    ===================================================== */
-
     cta:{
 
-        text:
-            "จองคิวเลย",
+        text:"จองคิวเลย",
 
-        url:
-            "https://lin.ee/s6TdSA3X"
+        url:"https://lin.ee/s6TdSA3X"
 
     },
 
-
-    /* =====================================================
-       CONTACT
-    ===================================================== */
 
     contact:{
 
@@ -2301,24 +2165,27 @@ const DEFAULT_CONFIG = {
     },
 
 
-    /* =====================================================
-       FOOTER
-    ===================================================== */
-
     footer:{
 
-        brand:
-            "Bobbe’s oracle",
+        brand:"Bobbe’s oracle",
 
-        copy:
-            "TAROT READING & GUIDANCE"
+        copy:"TAROT READING & GUIDANCE"
 
     },
 
 
-    /* =====================================================
-       ADMIN
-    ===================================================== */
+    music:{
+
+        enabled:true,
+
+        url:"",
+
+        autoplay:false,
+
+        volume:.45
+
+    },
+
 
     admin:{
 
@@ -2331,84 +2198,23 @@ const DEFAULT_CONFIG = {
 };
 
 
-
 /* =========================================================
-   LOAD CONFIG
+   CURRENT CONFIG
 ========================================================= */
 
-function getConfig(){
-
-    try{
-
-        const saved =
-            localStorage.getItem(
-                "bobbesOracleMenuConfig"
-            );
-
-
-        if(!saved){
-
-            return structuredClone(
-                DEFAULT_CONFIG
-            );
-
-        }
-
-
-        const parsed =
-            JSON.parse(saved);
-
-
-        return mergeDeep(
-
-            structuredClone(
-                DEFAULT_CONFIG
-            ),
-
-            parsed
-
-        );
-
-    }catch(error){
-
-        console.warn(
-            "ไม่สามารถโหลด Config ได้",
-            error
-        );
-
-
-        return structuredClone(
-            DEFAULT_CONFIG
-        );
-
-    }
-
-}
-
+let currentConfig =
+    structuredClone(DEFAULT_CONFIG);
 
 
 /* =========================================================
-   MERGE
+   DEEP MERGE
 ========================================================= */
 
-function mergeDeep(
-    target,
-    source
-){
+function mergeDeep(target,source){
 
     if(
-        typeof target !== "object" ||
-        target === null
-    ){
-
-        return source;
-
-    }
-
-
-    if(
-        typeof source !== "object" ||
-        source === null
+        !source ||
+        typeof source !== "object"
     ){
 
         return target;
@@ -2416,26 +2222,17 @@ function mergeDeep(
     }
 
 
-    for(
-        const key of Object.keys(source)
-    ){
+    Object.keys(source).forEach(key=>{
 
         if(
-
             source[key] &&
-
             typeof source[key] === "object" &&
-
             !Array.isArray(source[key])
-
         ){
 
             if(
-
                 !target[key] ||
-
                 typeof target[key] !== "object"
-
             ){
 
                 target[key] = {};
@@ -2444,11 +2241,8 @@ function mergeDeep(
 
 
             mergeDeep(
-
                 target[key],
-
                 source[key]
-
             );
 
         }else{
@@ -2458,7 +2252,7 @@ function mergeDeep(
 
         }
 
-    }
+    });
 
 
     return target;
@@ -2466,58 +2260,35 @@ function mergeDeep(
 }
 
 
-
 /* =========================================================
-   ESCAPE HTML
+   ESCAPE
 ========================================================= */
 
 function escapeHTML(value){
 
-    return String(
-        value ?? ""
-    )
+    return String(value ?? "")
 
-    .replace(
-        /&/g,
-        "&amp;"
-    )
+        .replace(/&/g,"&amp;")
 
-    .replace(
-        /</g,
-        "&lt;"
-    )
+        .replace(/</g,"&lt;")
 
-    .replace(
-        />/g,
-        "&gt;"
-    )
+        .replace(/>/g,"&gt;")
 
-    .replace(
-        /"/g,
-        "&quot;"
-    )
+        .replace(/"/g,"&quot;")
 
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+        .replace(/'/g,"&#039;");
 
 }
-
 
 
 /* =========================================================
    SET TEXT
 ========================================================= */
 
-function setText(
-    id,
-    value
-){
+function setText(id,value){
 
     const element =
         document.getElementById(id);
-
 
     if(element){
 
@@ -2529,6 +2300,98 @@ function setText(
 }
 
 
+/* =========================================================
+   LOAD FROM SUPABASE
+========================================================= */
+
+async function loadConfigFromSupabase(){
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+
+            .from("bobbes_oracle_config")
+
+            .select("config,published,updated_at")
+
+            .eq("id",1)
+
+            .eq("published",true)
+
+            .maybeSingle();
+
+
+        if(error){
+
+            console.error(
+                "Supabase load error:",
+                error
+            );
+
+            currentConfig =
+                structuredClone(
+                    DEFAULT_CONFIG
+                );
+
+            renderPage();
+
+            return;
+
+        }
+
+
+        if(
+            data &&
+            data.config
+        ){
+
+            currentConfig =
+                mergeDeep(
+
+                    structuredClone(
+                        DEFAULT_CONFIG
+                    ),
+
+                    data.config
+
+                );
+
+        }else{
+
+            currentConfig =
+                structuredClone(
+                    DEFAULT_CONFIG
+                );
+
+        }
+
+
+        renderPage();
+
+
+    }catch(error){
+
+        console.error(
+            "ไม่สามารถเชื่อมต่อ Supabase:",
+            error
+        );
+
+
+        currentConfig =
+            structuredClone(
+                DEFAULT_CONFIG
+            );
+
+
+        renderPage();
+
+    }
+
+}
+
 
 /* =========================================================
    RENDER PAGE
@@ -2537,8 +2400,7 @@ function setText(
 function renderPage(){
 
     const config =
-        getConfig();
-
+        currentConfig;
 
 
     /* =====================================================
@@ -2558,8 +2420,7 @@ function renderPage(){
 
 
     if(
-        config.images &&
-        config.images.background
+        config.images?.background
     ){
 
         background.src =
@@ -2569,15 +2430,13 @@ function renderPage(){
 
 
     if(
-        config.images &&
-        config.images.hero
+        config.images?.hero
     ){
 
         hero.src =
             config.images.hero;
 
     }
-
 
 
     /* =====================================================
@@ -2589,18 +2448,15 @@ function renderPage(){
         config.intro?.eyebrow
     );
 
-
     setText(
         "introTitle",
         config.intro?.title
     );
 
-
     setText(
         "introText",
         config.intro?.text
     );
-
 
 
     /* =====================================================
@@ -2611,7 +2467,6 @@ function renderPage(){
         "servicesEyebrow",
         config.servicesTitle?.eyebrow
     );
-
 
     setText(
         "servicesTitle",
@@ -2629,7 +2484,13 @@ function renderPage(){
         Array.isArray(
             config.services
         )
-        ? config.services
+
+        ? config.services.filter(
+            service =>
+                service &&
+                service.enabled !== false
+        )
+
         : [];
 
 
@@ -2639,7 +2500,7 @@ function renderPage(){
 
             <div class="empty-state">
 
-                ยังไม่มีบริการ
+                ยังไม่มีบริการเปิดให้เลือกในขณะนี้
 
             </div>
 
@@ -2649,36 +2510,35 @@ function renderPage(){
 
         servicesList.innerHTML =
 
-            services
+            services.map(service=>`
 
-            .map(
+                <article class="service-card">
 
-                service => `
+                    <div class="service-top">
 
-                    <article class="service-card">
+                        <h3 class="service-name">
 
-                        <div class="service-top">
+                            ${escapeHTML(
+                                service.name
+                            )}
 
-                            <h3 class="service-name">
+                        </h3>
 
-                                ${escapeHTML(
-                                    service.name
-                                )}
+                        <div class="service-price">
 
-                            </h3>
-
-
-                            <div class="service-price">
-
-                                ${escapeHTML(
-                                    service.price
-                                )}
-
-                            </div>
+                            ${escapeHTML(
+                                service.price
+                            )}
 
                         </div>
 
+                    </div>
 
+
+                    ${
+                        service.description
+                        ?
+                        `
                         <p class="service-desc">
 
                             ${escapeHTML(
@@ -2686,17 +2546,16 @@ function renderPage(){
                             )}
 
                         </p>
+                        `
+                        :
+                        ""
+                    }
 
-                    </article>
+                </article>
 
-                `
-
-            )
-
-            .join("");
+            `).join("");
 
     }
-
 
 
     /* =====================================================
@@ -2707,7 +2566,6 @@ function renderPage(){
         "priceEyebrow",
         config.priceTitle?.eyebrow
     );
-
 
     setText(
         "priceTitle",
@@ -2745,25 +2603,24 @@ function renderPage(){
 
         priceList.innerHTML =
 
-            prices
+            prices.map(item=>`
 
-            .map(
+                <div class="price-row">
 
-                item => `
+                    <div>
 
-                    <div class="price-row">
+                        <div class="price-name">
 
-                        <div>
+                            ${escapeHTML(
+                                item.name
+                            )}
 
-                            <div class="price-name">
+                        </div>
 
-                                ${escapeHTML(
-                                    item.name
-                                )}
-
-                            </div>
-
-
+                        ${
+                            item.duration
+                            ?
+                            `
                             <span class="price-duration">
 
                                 ${escapeHTML(
@@ -2771,28 +2628,27 @@ function renderPage(){
                                 )}
 
                             </span>
-
-                        </div>
-
-
-                        <div class="price-value">
-
-                            ${escapeHTML(
-                                item.value
-                            )}
-
-                        </div>
+                            `
+                            :
+                            ""
+                        }
 
                     </div>
 
-                `
 
-            )
+                    <div class="price-value">
 
-            .join("");
+                        ${escapeHTML(
+                            item.value
+                        )}
+
+                    </div>
+
+                </div>
+
+            `).join("");
 
     }
-
 
 
     /* =====================================================
@@ -2803,7 +2659,6 @@ function renderPage(){
         "bookingEyebrow",
         config.booking?.eyebrow
     );
-
 
     setText(
         "bookingTitle",
@@ -2827,11 +2682,8 @@ function renderPage(){
 
     bookingSteps.innerHTML =
 
-        steps
-
-        .map(
-
-            (step,index) => `
+        steps.map(
+            (step,index)=>`
 
                 <div class="step">
 
@@ -2841,23 +2693,16 @@ function renderPage(){
 
                     </div>
 
-
                     <div class="step-text">
 
-                        ${escapeHTML(
-                            step
-                        )}
+                        ${escapeHTML(step)}
 
                     </div>
 
                 </div>
 
             `
-
-        )
-
-        .join("");
-
+        ).join("");
 
 
     /* =====================================================
@@ -2880,7 +2725,6 @@ function renderPage(){
         "https://lin.ee/s6TdSA3X";
 
 
-
     /* =====================================================
        CONTACT
     ===================================================== */
@@ -2890,36 +2734,30 @@ function renderPage(){
         config.contact?.eyebrow
     );
 
-
     setText(
         "contactTitle",
         config.contact?.title
     );
-
 
     setText(
         "lineLabel",
         config.contact?.lineLabel
     );
 
-
     setText(
         "lineValue",
         config.contact?.line
     );
-
 
     setText(
         "tiktokLabel",
         config.contact?.tiktokLabel
     );
 
-
     setText(
         "tiktokValue",
         config.contact?.tiktok
     );
-
 
 
     /* =====================================================
@@ -2931,12 +2769,10 @@ function renderPage(){
         config.footer?.brand
     );
 
-
     setText(
         "footerCopy",
         config.footer?.copy
     );
-
 
 
     /* =====================================================
@@ -2944,7 +2780,6 @@ function renderPage(){
     ===================================================== */
 
     setupAdmin(config);
-
 
 
     /* =====================================================
@@ -2956,14 +2791,13 @@ function renderPage(){
 }
 
 
-
 /* =========================================================
-   ADMIN
+   ADMIN BUTTON
 ========================================================= */
 
 function setupAdmin(config){
 
-    const adminButton =
+    const button =
         document.getElementById(
             "adminButton"
         );
@@ -2973,7 +2807,7 @@ function setupAdmin(config){
         !config.admin?.enabled
     ){
 
-        adminButton.style.display =
+        button.style.display =
             "none";
 
         return;
@@ -2981,40 +2815,37 @@ function setupAdmin(config){
     }
 
 
-    adminButton.style.display =
+    button.style.display =
         "flex";
 
 
-    adminButton.href =
-        config.admin.url ||
+    button.href =
+        config.admin?.url ||
         "admin.html";
 
 }
-
 
 
 /* =========================================================
    MUSIC
 ========================================================= */
 
-let musicConfiguredURL = "";
+let musicURL = "";
 
-let musicEventsReady = false;
+let musicInitialized = false;
 
 
 function setupMusic(config){
 
-    const music =
+    const audio =
         document.getElementById(
             "backgroundMusic"
         );
-
 
     const button =
         document.getElementById(
             "musicButton"
         );
-
 
     const icon =
         document.getElementById(
@@ -3029,7 +2860,7 @@ function setupMusic(config){
         button.style.display =
             "none";
 
-        music.pause();
+        audio.pause();
 
         return;
 
@@ -3040,44 +2871,32 @@ function setupMusic(config){
         "flex";
 
 
-    const url =
+    musicURL =
         String(
             config.music?.url || ""
         ).trim();
 
 
-    musicConfiguredURL =
-        url;
+    if(
+        !musicURL
+    ){
 
+        audio.pause();
 
-    /* ไม่มีเพลง */
+        audio.removeAttribute("src");
 
-    if(!url){
-
-        music.removeAttribute(
-            "src"
-        );
-
-
-        music.pause();
-
-
-        icon.textContent =
-            "♪";
-
-
-        button.classList.remove(
-            "music-playing"
-        );
-
+        button.style.opacity =
+            ".45";
 
         button.title =
             "ยังไม่ได้ตั้งค่าเพลง";
 
+        icon.textContent =
+            "♪";
 
-        button.style.opacity =
-            ".48";
-
+        button.classList.remove(
+            "music-playing"
+        );
 
         return;
 
@@ -3087,33 +2906,36 @@ function setupMusic(config){
     button.style.opacity =
         "1";
 
-
     button.title =
         "เปิดเพลง";
 
 
-    /*
-       เปลี่ยน src เฉพาะเมื่อ URL เปลี่ยน
-       เพื่อไม่ให้เพลงหยุดทุกครั้งที่ render
-    */
+    const currentSrc =
+        audio.getAttribute("src") || "";
+
 
     if(
-        music.src !== url
+        currentSrc !== musicURL
     ){
 
-        music.src =
-            url;
+        audio.src =
+            musicURL;
 
-        music.load();
+        audio.volume =
+            Number(
+                config.music?.volume ?? .45
+            );
+
+        audio.load();
 
     }
 
 
     if(
-        !musicEventsReady
+        !musicInitialized
     ){
 
-        musicEventsReady =
+        musicInitialized =
             true;
 
 
@@ -3123,18 +2945,16 @@ function setupMusic(config){
         );
 
 
-        music.addEventListener(
+        audio.addEventListener(
             "play",
-            function(){
+            ()=>{
 
                 icon.textContent =
                     "♫";
 
-
                 button.classList.add(
                     "music-playing"
                 );
-
 
                 button.title =
                     "ปิดเพลง";
@@ -3143,18 +2963,16 @@ function setupMusic(config){
         );
 
 
-        music.addEventListener(
+        audio.addEventListener(
             "pause",
-            function(){
+            ()=>{
 
                 icon.textContent =
                     "♪";
 
-
                 button.classList.remove(
                     "music-playing"
                 );
-
 
                 button.title =
                     "เปิดเพลง";
@@ -3163,12 +2981,12 @@ function setupMusic(config){
         );
 
 
-        music.addEventListener(
+        audio.addEventListener(
             "error",
-            function(){
+            ()=>{
 
                 console.warn(
-                    "ไม่สามารถเล่นเพลงได้"
+                    "ไม่สามารถเล่นไฟล์เพลงได้"
                 );
 
                 icon.textContent =
@@ -3184,32 +3002,27 @@ function setupMusic(config){
     }
 
 
-    /*
-       autoplay
-       เบราว์เซอร์อาจบล็อก autoplay
-       ถ้าไม่ได้มี user interaction
-    */
+    /* =====================================================
+       AUTOPLAY
+       browser อาจบล็อกเสียงอัตโนมัติ
+    ===================================================== */
 
     if(
-        config.music?.autoplay
+        config.music?.autoplay &&
+        audio.paused
     ){
 
-        music.play()
+        audio.play().catch(()=>{
 
-        .catch(
-            () => {
+            console.log(
+                "Browser ป้องกัน autoplay"
+            );
 
-                console.log(
-                    "Browser ป้องกัน autoplay"
-                );
-
-            }
-        );
+        });
 
     }
 
 }
-
 
 
 /* =========================================================
@@ -3218,21 +3031,13 @@ function setupMusic(config){
 
 async function toggleMusic(){
 
-    const music =
+    const audio =
         document.getElementById(
             "backgroundMusic"
         );
 
 
-    const button =
-        document.getElementById(
-            "musicButton"
-        );
-
-
-    if(
-        !musicConfiguredURL
-    ){
+    if(!musicURL){
 
         return;
 
@@ -3242,29 +3047,21 @@ async function toggleMusic(){
     try{
 
         if(
-            music.paused
+            audio.paused
         ){
 
-            await music.play();
-
-            button.classList.add(
-                "music-playing"
-            );
+            await audio.play();
 
         }else{
 
-            music.pause();
-
-            button.classList.remove(
-                "music-playing"
-            );
+            audio.pause();
 
         }
 
     }catch(error){
 
         console.warn(
-            "ไม่สามารถเปิดเพลงได้",
+            "ไม่สามารถเล่นเพลง:",
             error
         );
 
@@ -3273,30 +3070,113 @@ async function toggleMusic(){
 }
 
 
-
 /* =========================================================
-   START
+   TRY AUTOPLAY AFTER FIRST TOUCH
 ========================================================= */
 
-renderPage();
+let firstInteractionHandled =
+    false;
 
+
+async function startMusicAfterInteraction(){
+
+    if(
+        firstInteractionHandled
+    ){
+
+        return;
+
+    }
+
+
+    firstInteractionHandled =
+        true;
+
+
+    if(
+        !currentConfig.music?.enabled
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        !currentConfig.music?.autoplay
+    ){
+
+        return;
+
+    }
+
+
+    const audio =
+        document.getElementById(
+            "backgroundMusic"
+        );
+
+
+    if(
+        !musicURL ||
+        !audio.paused
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        await audio.play();
+
+    }catch(error){
+
+        console.log(
+            "ไม่สามารถ autoplay หลัง interaction ได้"
+        );
+
+    }
+
+}
+
+
+document.addEventListener(
+    "pointerdown",
+    startMusicAfterInteraction,
+    {
+        once:false,
+        passive:true
+    }
+);
 
 
 /* =========================================================
-   UPDATE WHEN ADMIN SAVES
+   REFRESH CONFIG
 ========================================================= */
 
-window.addEventListener(
-    "storage",
-    function(event){
+async function refreshConfig(){
+
+    await loadConfigFromSupabase();
+
+}
+
+
+/* =========================================================
+   PAGE VISIBILITY
+   กลับมาหน้าเว็บแล้วเช็คข้อมูลใหม่
+========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    ()=>{
 
         if(
-            !event.key ||
-            event.key ===
-            "bobbesOracleMenuConfig"
+            document.visibilityState === "visible"
         ){
 
-            renderPage();
+            refreshConfig();
 
         }
 
@@ -3304,13 +3184,26 @@ window.addEventListener(
 );
 
 
-/*
-   ถ้า Admin เปิดในแท็บอื่นแล้วแก้ข้อมูล
-   menu.html จะอ่านข้อมูลใหม่เมื่อ localStorage เปลี่ยน
-*/
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
 
+loadConfigFromSupabase();
+
+
+/* =========================================================
+   OPTIONAL:
+   เช็คข้อมูลใหม่ทุก 60 วินาที
+   เผื่อ Admin แก้จากเครื่องอื่น
+========================================================= */
+
+setInterval(
+    refreshConfig,
+    60000
+);
 
 </script>
+
 
 </body>
 </html>
