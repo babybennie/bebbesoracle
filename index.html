@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>bebbsoracle.com — Bobbe's Oracle</title>
+
+<meta
+    name="description"
+    content="Bobbe's Oracle — Tarot Reading & Guidance"
+>
+
+<meta name="theme-color" content="#080606">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    overflow:hidden;
+    background:#080606;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page{
+    position:relative;
+
+    width:100%;
+    height:100dvh;
+
+    min-height:600px;
+
+    overflow:hidden;
+
+    background:#080606;
+}
+
+
+/* =========================================================
+   BACKGROUND IMAGE
+========================================================= */
+
+.background{
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    background-image:url(
+        "https://i.postimg.cc/hjmbgc74/B1872B8A-EBE3-44B0-90FD-50D56AE04E37.png"
+    );
+
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-size:cover;
+
+    z-index:1;
+}
+
+
+/* =========================================================
+   DARK OVERLAY
+   ช่วยให้ animation ของไพ่เด่นขึ้น
+========================================================= */
+
+.background::after{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            transparent 25%,
+            rgba(0,0,0,.18) 65%,
+            rgba(0,0,0,.35) 100%
+        );
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   ENVELOPE CLICK AREA
+   ตำแหน่งซองตรงกลางจากภาพพื้นหลัง
+========================================================= */
+
+.envelope-button{
+    position:absolute;
+
+    z-index:5;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width:min(390px,34vw);
+    aspect-ratio:1.45 / 1;
+
+    cursor:pointer;
+
+    background:transparent;
+
+    border:0;
+
+    outline:none;
+}
+
+
+/* hover */
+
+.envelope-button::after{
+    content:"";
+
+    position:absolute;
+
+    inset:8%;
+
+    border-radius:4px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(234,212,180,.10),
+            transparent 65%
+        );
+
+    opacity:0;
+
+    transition:opacity .4s ease;
+
+    pointer-events:none;
+}
+
+.envelope-button:hover::after{
+    opacity:1;
+}
+
+
+/* =========================================================
+   TAROT CARD
+========================================================= */
+
+.tarot-stage{
+    position:absolute;
+
+    z-index:20;
+
+    left:50%;
+    top:50%;
+
+    /*
+       ขนาดไพ่
+    */
+
+    width:min(245px,20vw);
+
+    aspect-ratio:2 / 3.42;
+
+    /*
+       ซ่อนก่อนเปิด
+    */
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transform:
+        translate(-50%,-50%)
+        translateY(70px)
+        scale(.72)
+        rotateY(-25deg);
+
+    transform-style:preserve-3d;
+
+    transition:
+        opacity .45s ease,
+        transform 1.15s cubic-bezier(.18,.82,.2,1);
+}
+
+
+/* =========================================================
+   TAROT CARD IMAGE
+========================================================= */
+
+.tarot-card{
+    position:relative;
+
+    width:100%;
+    height:100%;
+
+    display:block;
+
+    border:0;
+
+    padding:0;
+
+    background:none;
+
+    cursor:pointer;
+
+    outline:none;
+
+    transform-style:preserve-3d;
+}
+
+
+/* actual image */
+
+.tarot-card img{
+    display:block;
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    object-position:center;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+    filter:
+        drop-shadow(
+            0 25px 35px rgba(0,0,0,.85)
+        )
+        drop-shadow(
+            0 0 18px rgba(174,126,82,.18)
+        );
+
+    transition:
+        transform .35s ease,
+        filter .35s ease;
+}
+
+
+/* hover ไพ่ */
+
+.tarot-card:hover img{
+    transform:translateY(-5px);
+
+    filter:
+        drop-shadow(
+            0 30px 42px rgba(0,0,0,.9)
+        )
+        drop-shadow(
+            0 0 25px rgba(196,153,104,.25)
+        );
+}
+
+
+/* =========================================================
+   CARD CLICK GLOW
+========================================================= */
+
+.tarot-card::after{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(234,212,180,.12),
+            transparent 60%
+        );
+
+    opacity:0;
+
+    transition:opacity .3s ease;
+}
+
+.tarot-card:hover::after{
+    opacity:1;
+}
+
+
+/* =========================================================
+   OPEN STATE
+========================================================= */
+
+.page.opening .envelope-button{
+    pointer-events:none;
+}
+
+
+/*
+   หลังเปิด ไพ่จะขึ้นตรงกลาง
+*/
+
+.page.card-reveal .tarot-stage{
+
+    opacity:1;
+
+    pointer-events:auto;
+
+    transform:
+        translate(-50%,-50%)
+        translateY(0)
+        scale(1)
+        rotateY(0deg);
+}
+
+
+/* =========================================================
+   SPARKLES
+========================================================= */
+
+.sparkles{
+    position:absolute;
+
+    inset:0;
+
+    z-index:18;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    transition:
+        opacity .7s ease;
+}
+
+.page.card-reveal .sparkles{
+    opacity:1;
+}
+
+.spark{
+    position:absolute;
+
+    width:3px;
+    height:3px;
+
+    border-radius:50%;
+
+    background:#e7cda9;
+
+    box-shadow:
+        0 0 10px rgba(234,212,180,.9);
+
+    animation:
+        sparkle 1.8s ease-in-out infinite;
+}
+
+.spark:nth-child(1){
+    left:39%;
+    top:32%;
+    animation-delay:.1s;
+}
+
+.spark:nth-child(2){
+    left:62%;
+    top:29%;
+    animation-delay:.35s;
+}
+
+.spark:nth-child(3){
+    left:31%;
+    top:46%;
+    animation-delay:.7s;
+}
+
+.spark:nth-child(4){
+    left:69%;
+    top:49%;
+    animation-delay:.2s;
+}
+
+.spark:nth-child(5){
+    left:43%;
+    top:67%;
+    animation-delay:.9s;
+}
+
+.spark:nth-child(6){
+    left:58%;
+    top:70%;
+    animation-delay:.5s;
+}
+
+.spark:nth-child(7){
+    left:50%;
+    top:22%;
+    animation-delay:1.1s;
+}
+
+@keyframes sparkle{
+
+    0%,100%{
+        opacity:.15;
+        transform:scale(.5);
+    }
+
+    50%{
+        opacity:1;
+        transform:scale(1.8);
+    }
+
+}
+
+
+/* =========================================================
+   SKIP BUTTON
+   ไม่มีข้อความ เพราะข้อความ "ข้าม →"
+   อยู่ในภาพ Background อยู่แล้ว
+
+   เราทำพื้นที่กดทับไว้ตรงตำแหน่งปุ่ม
+========================================================= */
+
+.skip-button{
+    position:absolute;
+
+    z-index:50;
+
+    left:50%;
+
+    /*
+       ตำแหน่งปุ่มข้ามในภาพที่ส่งมา
+    */
+
+    bottom:4.5%;
+
+    transform:translateX(-50%);
+
+    width:100px;
+    height:46px;
+
+    border:0;
+
+    background:transparent;
+
+    cursor:pointer;
+
+    border-radius:30px;
+
+    outline:none;
+}
+
+
+/* hover บริเวณปุ่ม */
+
+.skip-button::after{
+    content:"";
+
+    position:absolute;
+
+    inset:5px;
+
+    border-radius:30px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(220,180,130,.12),
+            transparent 70%
+        );
+
+    opacity:0;
+
+    transition:opacity .3s ease;
+}
+
+.skip-button:hover::after{
+    opacity:1;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+    .page{
+        min-height:100dvh;
+    }
+
+
+    /*
+       ภาพพื้นหลังบนมือถือ
+       ใช้ cover เพื่อเต็มหน้าจอ
+    */
+
+    .background{
+        background-position:center center;
+        background-size:cover;
+    }
+
+
+    /*
+       พื้นที่ซอง
+    */
+
+    .envelope-button{
+
+        width:78vw;
+
+        max-width:350px;
+
+        top:50%;
+
+    }
+
+
+    /*
+       ไพ่บนมือถือ
+    */
+
+    .tarot-stage{
+
+        width:min(205px,48vw);
+
+        transform:
+            translate(-50%,-50%)
+            translateY(55px)
+            scale(.72)
+            rotateY(-25deg);
+
+    }
+
+
+    /*
+       ไพ่หลังเปิด
+    */
+
+    .page.card-reveal .tarot-stage{
+
+        transform:
+            translate(-50%,-50%)
+            translateY(0)
+            scale(1)
+            rotateY(0deg);
+
+    }
+
+
+    /*
+       ปุ่มข้าม
+    */
+
+    .skip-button{
+
+        bottom:5%;
+
+        width:110px;
+        height:50px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media(max-width:380px){
+
+    .tarot-stage{
+        width:175px;
+    }
+
+    .skip-button{
+        bottom:4%;
+    }
+
+}
+
+
+/* =========================================================
+   LANDSCAPE MOBILE
+========================================================= */
+
+@media(
+    max-height:600px
+) and (
+    orientation:landscape
+){
+
+    .tarot-stage{
+        height:70vh;
+        width:auto;
+    }
+
+    .skip-button{
+        bottom:3%;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:.01ms !important;
+
+        animation-iteration-count:1 !important;
+
+        transition-duration:.01ms !important;
+
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="page" id="page">
+
+
+    <!-- =====================================================
+         BACKGROUND
+         ภาพพื้นหลังที่คุณทำไว้
+    ====================================================== -->
+
+    <div class="background"></div>
+
+
+    <!-- =====================================================
+         ENVELOPE CLICK AREA
+
+         ตรงนี้เป็น "พื้นที่กดเปิดซอง"
+         แต่ไม่ใส่ข้อความหรือภาพเพิ่ม
+         เพราะภาพพื้นหลังมีซองอยู่แล้ว
+    ====================================================== -->
+
+    <button
+        class="envelope-button"
+        id="envelopeButton"
+        aria-label="เปิดจดหมาย"
+    ></button>
+
+
+    <!-- =====================================================
+         TAROT CARD
+
+         ใช้รูปจริงของคุณแทน SVG เดิม
+    ====================================================== -->
+
+    <div
+        class="tarot-stage"
+        id="tarotStage"
+    >
+
+        <button
+            class="tarot-card"
+            id="tarotCard"
+            aria-label="เปิดดูไพ่และไปหน้าเมนู"
+        >
+
+            <img
+                src="https://i.postimg.cc/ZKSjbBHm/BDD3978F-AD2E-49FE-B50E-824E67CBDC5F.png"
+                alt=""
+                draggable="false"
+            >
+
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         SPARKLES
+    ====================================================== -->
+
+    <div class="sparkles">
+
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+
+    </div>
+
+
+    <!-- =====================================================
+         SKIP
+
+         ตัวปุ่มที่เห็นใน Background
+         เราวางพื้นที่กดทับไว้เพื่อให้กดไป menu.html ได้
+
+         ไม่ใส่ข้อความ เพราะข้อความอยู่ในภาพแล้ว
+    ====================================================== -->
+
+    <button
+        class="skip-button"
+        id="skipButton"
+        aria-label="ข้ามไปหน้าเมนู"
+    ></button>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const CONFIG = {
+
+    /*
+       หน้าถัดไป
+    */
+
+    nextPage: "menu.html",
+
+    /*
+       เวลาหลังจากกดซอง
+       ก่อนให้ไพ่ปรากฏ
+    */
+
+    cardDelay: 750
+
+};
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const page =
+    document.getElementById("page");
+
+const envelopeButton =
+    document.getElementById("envelopeButton");
+
+const tarotStage =
+    document.getElementById("tarotStage");
+
+const tarotCard =
+    document.getElementById("tarotCard");
+
+const skipButton =
+    document.getElementById("skipButton");
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let opened = false;
+
+
+/* =========================================================
+   OPEN ENVELOPE
+========================================================= */
+
+function openLetter(){
+
+    if(opened) return;
+
+    opened = true;
+
+
+    /*
+       เริ่ม animation
+    */
+
+    page.classList.add("opening");
+
+
+    /*
+       รอเล็กน้อย แล้วแสดงไพ่จริง
+    */
+
+    setTimeout(function(){
+
+        page.classList.add("card-reveal");
+
+    }, CONFIG.cardDelay);
+
+}
+
+
+/* =========================================================
+   CLICK ENVELOPE
+========================================================= */
+
+envelopeButton.addEventListener(
+    "click",
+    openLetter
+);
+
+
+/* =========================================================
+   KEYBOARD ENVELOPE
+========================================================= */
+
+envelopeButton.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter" ||
+            event.key === " "
+        ){
+
+            event.preventDefault();
+
+            openLetter();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLICK TAROT CARD
+   ไพ่จริงกดแล้วไป menu.html
+========================================================= */
+
+tarotCard.addEventListener(
+    "click",
+    function(){
+
+        window.location.href =
+            CONFIG.nextPage;
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD TAROT CARD
+========================================================= */
+
+tarotCard.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter" ||
+            event.key === " "
+        ){
+
+            event.preventDefault();
+
+            window.location.href =
+                CONFIG.nextPage;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SKIP BUTTON
+   กดแล้วไป menu.html ทันที
+========================================================= */
+
+skipButton.addEventListener(
+    "click",
+    function(){
+
+        window.location.href =
+            CONFIG.nextPage;
+
+    }
+);
+
+
+/* =========================================================
+   PREVENT SCROLL
+========================================================= */
+
+window.addEventListener(
+    "wheel",
+    function(event){
+
+        event.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   PREVENT TOUCH SCROLL
+========================================================= */
+
+document.addEventListener(
+    "touchmove",
+    function(event){
+
+        event.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+</script>
+
+</body>
+</html>
